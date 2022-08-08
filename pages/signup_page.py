@@ -134,10 +134,6 @@ class SignupPage(BasePage):
             SignupLocators.GOT_IT_BUTTON
         )
     
-    @property
-    def avatar_locator(self):
-        return SignupLocators.AVATAR
-    
     def check_scroll(self):
         assert self.get_element(
             'Body',

@@ -35,5 +35,3 @@ class SignupLocators:
 
     SUCCESS_POPUP = (By.CSS_SELECTOR, '.autotest__success-screen')
     GOT_IT_BUTTON = (By.CSS_SELECTOR, '.autotest__success-cancel-button')
-
-    AVATAR = (By.CSS_SELECTOR, '.autotest__profile_header_avatar')

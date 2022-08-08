@@ -10,7 +10,14 @@ class EmailPage(BasePage):
             'Signup button',
             EmailLocators.SIGNUP_BUTTON
         )
-    
+
+    @property
+    def signin_button(self):
+        return self.get_element(
+            'Signinn button',
+            EmailLocators.SIGNIN_BUTTON
+        )
+
     @property
     def pin(self):
         return self.get_element(

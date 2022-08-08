@@ -4,12 +4,12 @@ import allure
 from ..utils import generate_valid_email
 
 
-class TestEmailRegister:
+class TestEmailSignup:
     @allure.testcase('Limex. Регистрация через email')
     @allure.feature('Регистрация через email')
     @allure.severity(allure.severity_level.NORMAL)
     @pytest.mark.manual
-    def test_email_regiser(self, app):
+    def test_email_signup(self, app):
         with allure.step('Step 1. В шапке сайта нажать на Регистрация/Sign Up'):
             app.models.nav.click_signup_button()
 
