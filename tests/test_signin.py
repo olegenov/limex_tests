@@ -1,8 +1,6 @@
 import pytest
 import allure
 
-from ..utils import generate_valid_email
-
 
 class TestEmailSignin:
     @allure.testcase('Limex/Авторизация, регистрация/авторизация')
