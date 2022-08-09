@@ -29,3 +29,6 @@ class TestEmailSignin:
         
         with allure.step('Step 7. Нажать на кнопку Sign In/Войти'):
             app.models.signin.click_sign_in()
+        
+        with allure.step('Asserts. Проверить, что пользователь вошёл'):
+            app.models.nav.check_signed_in()

@@ -1,5 +1,7 @@
 import time
 
+from ..pages.nav_page import NavPage
+
 from .base_model import BaseModel
 from ..pages.signup_page import SignupPage
 from ..pages.signin_page import SigninPage
@@ -21,3 +23,10 @@ class Nav(BaseModel):
         self.page.check_visibility('Popup', self.page.popup_locator)
         self.page.check_options()
         self.page.check_visibility('Cross', self.page.cross_locator)
+    
+    def check_signed_in(self):
+        self.page = NavPage(self.driver, self.driver.current_url)
+        self.page.check_visibility(
+            'Avatar',
+            self.page.avatar_locator
+        )

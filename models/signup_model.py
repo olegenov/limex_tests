@@ -114,8 +114,3 @@ class Signup(BaseModel):
             self.page.success_popup_locator
         )
         self.page.got_it_button.click()
-        self.page = NavPage(self.driver, self.driver.current_url)
-        self.page.check_visibility(
-            'Avatar',
-            self.page.avatar_locator
-        )

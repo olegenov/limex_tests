@@ -40,3 +40,6 @@ class TestEmailSignup:
         
         with allure.step('Step 10. Нажать на кнопку Got It/Все понятно'):
             app.models.signup.click_got_it()
+        
+        with allure.step('Asserts. Проверить, что пользователь вошёл'):
+            app.models.nav.check_signed_in()
