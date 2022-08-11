@@ -16,9 +16,6 @@ class Signup(BaseModel):
         self.page.check_scroll()
 
     def click_email_button(self):
-        self.page = NavPage(self.driver, self.driver.current_url)
-        self.page.signup_button.click()
-        self.page = SignupPage(self.driver, self.driver.current_url)
         self.page.email_button.click()
         self.page.check_active_email_field()
         self.page.check_visibility('Terms', self.page.terms_label_locator)
@@ -90,10 +87,11 @@ class Signup(BaseModel):
 
     def complete_signup(self, email):
         self.go_to('https://mailtst.dev.whotrades.net/{}/'.format(email))
-        self.page = EmailPage(self.driver, self.driver.current_url)
-        pin = self.page.pin.text
-        self.page.signup_button.click()
-        self.page = SignupPage(self.driver, self.driver.current_url)
+    
+        page = EmailPage(self.driver, self.driver.current_url)
+        pin = page.pin.text
+        page.signup_button.click()
+
         got_pin = self.page.pin_input.get_attribute('value')
         self.page.compare_texts(got_pin, pin)
         self.page.check_invisibility(
@@ -113,4 +111,4 @@ class Signup(BaseModel):
             'Succes Popup',
             self.page.success_popup_locator
         )
-        self.page.got_it_button.click()
+        self.page.got_it_button.click()     

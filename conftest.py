@@ -5,7 +5,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
 from .apps import Application
-
+from .pages.base_page import BasePage
 
 
 def pytest_addoption(parser):
@@ -21,13 +21,16 @@ def app(request):
     browser = request.config.getoption('browser')
     
     if browser == 'mobile':
-        options.add_argument(
-            '--user-agent=Mozilla/5.0 (iPhone; CPU iPhone OS 10_3 like Mac OS X)' +
-            ' AppleWebKit/602.1.50 (KHTML, like Gecko) CriOS/56.0.2924.75 Mobile/14E5239e Safari/602.1'
-        )
+        mobile_emulation = {
+            'deviceMetrics': {'width': 390, 'height': 844, 'pixelRatio': 3},
+            'userAgent': '--user-agent=Mozilla/5.0 (iPhone; CPU iPhone OS 15_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/104.0.5112.71 Mobile/15E148 Safari/604.1'
+        }
+        options.add_experimental_option('mobileEmulation', mobile_emulation)
 
     app = Application(webdriver.Chrome(options=options), base_url)
-    app.driver.set_window_rect
+
+    if browser != 'mobile':
+        app.models.main.close_hint()
 
     yield app
 

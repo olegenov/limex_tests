@@ -14,3 +14,11 @@ class Application(object):
 
     def go_to(self, url):
         self.driver.get(url)
+
+    def change_locale(self, locale):
+        options = Options()
+        options.add_experimental_option('prefs', {'intl.accept_languages': locale})
+        self.driver.chrome_options = options
+    
+    def is_mobile(self):
+        return 'iPhone' in self.driver.execute_script('return navigator.userAgent',)

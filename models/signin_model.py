@@ -16,9 +16,6 @@ class Signin(BaseModel):
         self.page.check_scroll()
 
     def click_email_button(self):
-        self.page = NavPage(self.driver, self.driver.current_url)
-        self.page.signin_button.click()
-        self.page = SigninPage(self.driver, self.driver.current_url)
         self.page.email_button.click()
         self.page.check_active_email_field()
         self.page.check_button_disabled(
@@ -66,10 +63,11 @@ class Signin(BaseModel):
 
     def complete_signin(self, email):
         self.go_to('https://mailtst.dev.whotrades.net/{}/'.format(email))
-        self.page = EmailPage(self.driver, self.driver.current_url)
-        pin = self.page.pin.text
-        self.page.signin_button.click()
-        self.page = SigninPage(self.driver, self.driver.current_url)
+
+        page = EmailPage(self.driver, self.driver.current_url)
+        pin = page.pin.text
+        page.signin_button.click()
+
         got_pin = self.page.pin_input.get_attribute('value')
         self.page.compare_texts(got_pin, pin)
         self.page.check_invisibility(
@@ -79,8 +77,3 @@ class Signin(BaseModel):
 
     def click_sign_in(self):
         self.page.pin_next_button.click()
-        self.page = NavPage(self.driver, self.driver.current_url)
-        self.page.check_visibility(
-            'Avatar',
-            self.page.avatar_locator
-        )
