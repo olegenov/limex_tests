@@ -16,6 +16,7 @@ class SigninLocators:
 
     EMAIL_FIELD = (By.CSS_SELECTOR, '.autotest__sign-in-email-text-field input')
     EMAIL_FIELD_LABEL = (By.CSS_SELECTOR, '.autotest__sign-in-email-text-field label')
+    EMAIL_CLOSE_BUTTON = (By.CSS_SELECTOR, 'div.autotest__sign-in-email-screen svg')
 
     NEXT_BUTTON = (By.CSS_SELECTOR, '.autotest__sign-in-email-next-button')
     BACK_BUTTON = (By.CSS_SELECTOR, '.autotest__sign-in-email-cancel-button')

@@ -3,6 +3,8 @@ from .base_page import BasePage
 from ..locators.base_locators import BaseLocators
 from ..locators.signin_locators import SigninLocators
 
+from ..utils import wait
+
 
 class SigninPage(BasePage):
     @property
@@ -33,6 +35,13 @@ class SigninPage(BasePage):
             'Email field',
             SigninLocators.EMAIL_FIELD
         )
+    
+    @property
+    def email_close_button(self):
+        return self.get_element(
+            'Email close button',
+            SigninLocators.EMAIL_CLOSE_BUTTON
+        )
 
     @property
     def signup_button_locator(self):
@@ -40,14 +49,14 @@ class SigninPage(BasePage):
     
     @property
     def pin_next_button(self):
-        return self.get_element(
+        return self.get_clickable_element(
             'Pin next button',
             SigninLocators.PIN_NEXT_BUTTON
         )
 
     @property
     def next_button(self):
-        return self.get_element(
+        return self.get_clickable_element(
             'Next button',
             SigninLocators.NEXT_BUTTON
         )

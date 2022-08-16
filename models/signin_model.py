@@ -6,7 +6,7 @@ from ..pages.nav_page import NavPage
 from ..pages.signin_page import SigninPage
 from ..pages.email_page import EmailPage
 
-from ..utils import generate_invalid_email
+from ..utils import wait
 
 
 class Signin(BaseModel):

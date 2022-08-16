@@ -1,12 +1,15 @@
 import time
 from selenium.webdriver.common.keys import Keys
 
+from ..utils import wait
+
 from ..pages.nav_page import NavPage
 
 from .base_model import BaseModel
 from ..pages.signup_page import SignupPage
 from ..pages.signin_page import SigninPage
 from ..pages.search_page import SearchPage
+from ..pages.logout_page import LogoutPage
 
 
 class Nav(BaseModel):
@@ -36,15 +39,62 @@ class Nav(BaseModel):
             self.page.avatar_locator
         )
     
-    def input_search_request(self, request):
+    @wait(2)
+    def click_avatar(self):
+        self.page.avatar.click()
+    
+    def click_logout(self):
+        self.page.logout_button.click()
+
+        page = LogoutPage(self.driver, self.driver.current_url)
+        page.confirm_logout.click()
+    
+    @wait(1)
+    def input_post_search_request(self, request):
         self.page.search_input.clear()
-        self.page.search_input.send_keys(Keys.COMMAND, "a")
         self.page.search_input.send_keys(Keys.CONTROL, "a")
+        self.page.search_input.send_keys(Keys.COMMAND, "a")
         self.page.search_input.send_keys(Keys.DELETE)
         self.page.search_input.send_keys(request)
         page = SearchPage(self.driver, self.driver.current_url)
         page.posts_tab.click()
-        self.page.compare_texts(page.results[0].text, request)
     
+    @wait(1)
+    def input_stocks_search_request(self, request):
+        self.page.search_input.clear()
+        self.page.search_input.send_keys(Keys.CONTROL, "a")
+        self.page.search_input.send_keys(Keys.COMMAND, "a")
+        self.page.search_input.send_keys(Keys.DELETE)
+        self.page.search_input.send_keys(request)
+        page = SearchPage(self.driver, self.driver.current_url)
+        page.check_no_results(request)
+    
+    @wait(1)
+    def input_people_search_request(self, request):
+        self.page.search_input.clear()
+        self.page.search_input.send_keys(Keys.CONTROL, "a")
+        self.page.search_input.send_keys(Keys.COMMAND, "a")
+        self.page.search_input.send_keys(Keys.DELETE)
+        self.page.search_input.send_keys(request)
+        page = SearchPage(self.driver, self.driver.current_url)
+        page.people_tab.click()
+        page.check_people_results(request)
+        page.check_visibility('Verified', page.verified_locator)
+    
+    @wait(1)
     def click_search_button(self):
         self.page.search_button.click()
+    
+    @wait(1)
+    def input_self_search_request(self, request):
+        self.page.search_input.clear()
+        self.page.search_input.send_keys(Keys.CONTROL, "a")
+        self.page.search_input.send_keys(Keys.COMMAND, "a")
+        self.page.search_input.send_keys(Keys.DELETE)
+        self.page.search_input.send_keys(request)
+        page = SearchPage(self.driver, self.driver.current_url)
+        page.people_tab.click()
+        page.check_invisibility('Self subscription button', page.self_subscription_locator)
+    
+    def close_menu(self):
+        self.page.menu.click()

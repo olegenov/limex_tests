@@ -7,6 +7,18 @@ from ..locators.nav_locators import NavLocators
 
 class NavPage(BasePage):
     @property
+    def feed_link(self):
+        if self.is_mobile():
+            locator = NavLocators.FEED_LINK_MOBILE
+        else:
+            locator = NavLocators.FEED_LINK
+    
+        return self.get_element(
+            'Feed link',
+            locator
+        )
+
+    @property
     def signup_button(self):
         if self.is_mobile():
             locator = NavLocators.SIGNUP_MENU_BUTTON
@@ -31,6 +43,20 @@ class NavPage(BasePage):
         )
     
     @property
+    def logout_button(self):
+        return self.get_clickable_element(
+            'Logout button',
+            NavLocators.LOGOUT_BUTTON
+        )
+
+    @property
+    def avatar(self):
+        return self.get_clickable_element(
+            'Avatar',
+            NavLocators.AVATAR
+        )
+
+    @property
     def avatar_locator(self):
         return NavLocators.AVATAR
     
@@ -48,14 +74,14 @@ class NavPage(BasePage):
 
     @property
     def search_button(self):
-        return self.get_element(
+        return self.get_clickable_element(
             'Search button',
             NavLocators.SEARCH_BUTTON
         )
     
     @property
     def menu(self):
-        return self.get_element(
+        return self.get_clickable_element(
             'Menu',
             NavLocators.MENU
         )

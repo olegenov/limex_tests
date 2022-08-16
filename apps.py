@@ -18,7 +18,21 @@ class Application(object):
     def change_locale(self, locale):
         options = Options()
         options.add_experimental_option('prefs', {'intl.accept_languages': locale})
-        self.driver.chrome_options = options
+        self.driver.options = options
+        self.driver.refresh()
     
     def is_mobile(self):
         return 'iPhone' in self.driver.execute_script('return navigator.userAgent',)
+    
+    def login(self):
+        self.models.nav.click_login_button()
+        self.models.signin.click_email_button()
+        email = 'aboba@tst.whotrades.org'
+        self.models.signin.input_new_email(email)
+        self.models.signin.complete_signin(email)
+        self.models.signin.click_sign_in()
+        self.models.nav.check_signed_in()
+    
+    def logout(self):
+        self.models.nav.page.avatar.click()
+        self.models.nav.click_logout()

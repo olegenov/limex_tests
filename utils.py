@@ -31,8 +31,8 @@ def generate_invalid_email():
 def wait(delay=3):
         def deco(func):
             @functools.wraps(func)
-            def inner(args, **kwargs):
+            def inner(*args, **kwargs):
                 sleep(delay)
-                return func(args, **kwargs)
+                return func(*args, **kwargs)
             return inner
         return deco
