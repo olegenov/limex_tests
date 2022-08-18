@@ -7,6 +7,7 @@ class TestSearch:
     @allure.feature('Поиск поста')
     @allure.severity(allure.severity_level.NORMAL)
     @pytest.mark.regress
+    @pytest.mark.skip
     def test_posts_search(self, app):
         with allure.step('Step 1. Пользователь русский. В поле поиска ввести слова из заголовка поста'):
             if app.is_mobile():
@@ -29,6 +30,7 @@ class TestSearch:
     @allure.feature('Поиск людей')
     @allure.severity(allure.severity_level.NORMAL)
     @pytest.mark.regress
+    @pytest.mark.skip
     def test_people_search(self, app):
         with allure.step('Step 1. В поле поиска ввести Имя пользователя'):
             if app.is_mobile():
@@ -83,4 +85,52 @@ class TestSearch:
 
             app.models.nav.input_people_search_request('Tatyana Kalinnikova')
             app.models.search.user_follow()
+        
+        with allure.step('Asserts. Пользователь подписан на пользователя'):
+            app.models.profile.check_following()
             app.logout()
+        
+    @allure.testcase('Limex. Поиск. Внешний вид')
+    @allure.feature('Поиск. Внешний вид')
+    @allure.severity(allure.severity_level.NORMAL)
+    @pytest.mark.regress
+    def test_people_search(self, app):
+        with allure.step('Step 1. Гостем/Пользователем открыть страницу ленты'):
+            app.models.nav.check_components()
+        
+        with allure.step('Step 1. Кликнуть в любое место поле Поиска'):
+            app.models.nav.check_clickable_search()
+        
+        with allure.step('Step 3. Ввести название тикера'):
+            app.models.nav.input_search_request('Google')
+
+        with allure.step('Step 4. Ввести название тикера'):
+            app.models.search.click_ticker()
+        '''
+        with allure.step('Step 5. Гостем кликнуть по звездочке справа от любого тикера'):
+            app.models.search.guest_click_ticker_star()
+        
+        with allure.step('Step 6. Пользователем кликнуть по иконке звездочке справа от любого тикера'):
+            app.login()
+            app.models.search.user_click_ticker_star()
+        
+        with allure.step('Step 7. Проверить отображение тикера в вотчлисте'):
+            app.models.main.check_watchlist()
+        
+        with allure.step('Step 8. В поиск вновь ввести тот же тикер'):
+            app.models.search.input_starred_search_request('Google')
+
+        with allure.step('Step 9. Кликнуть на название любого тикера иным образом'):
+            app.models.search.hot_click_ticker()
+        '''
+        with allure.step('Step 10. Переключиться на "Люди"'):
+            app.models.nav.input_people_search_request('Дмитрий')
+        
+        with allure.step('Step 11. Переключиться на "Посты"'):
+            app.models.nav.input_post_search_request('Сбербанк обозначил')
+        
+        with allure.step('Step 12. Переключиться на "Магазин"'):
+            app.models.nav.input_shop_search_request('Research')
+        
+        with allure.step('Asserts. Проверить все табы на отсут. результат'):
+            app.models.nav.find_without_results('Оцлоуимжцоуижсло')

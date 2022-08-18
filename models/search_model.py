@@ -38,11 +38,17 @@ class Search(BaseModel):
         self.page.follow_button[0].click()
         self.page.check_invisibility('Subscription button', self.page.self_subscription_locator)
         self.page.people_results[0].click()
-        page = ProfilePage(self.driver, self.driver.current_url)
-        page.check_visibility('Subscribed', page.subscribed_locator)
-        page.compare_texts(page.subscribe_button.text, 'Вы подписаны')
-        page.subscribe_button.click()
-        page.check_visibility('Not subscribed', page.not_subscribed_locator)
     
     def close_search(self):
         self.page.close_button.click()
+    
+    def click_ticker(self):
+        self.page.stocks_results[0].click()
+        self.page.should_be_right_page('https://ng.tst.whotrades.net/$')
+
+        page = NavPage(self.driver, self.driver.current_url)
+
+        if page.is_mobile():
+            page.menu.click()
+
+        page.feed_link.click()

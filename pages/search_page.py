@@ -1,6 +1,9 @@
+from selenium.webdriver.common.keys import Keys
+
 from ..locators.search_locators import SearchLocators
 
 from .base_page import BasePage
+from .nav_page import NavPage
 
 
 class SearchPage(BasePage):
@@ -11,20 +14,50 @@ class SearchPage(BasePage):
     @property
     def search_result_locator(self):
         return SearchLocators.SEARCH_RESULT
+    
+    @property
+    def stocks_tab(self):
+        return self.get_clickable_element(
+            'Stocks search tab',
+            self.stocks_tab_locator
+        )
+    
+    @property
+    def stocks_tab_locator(self):
+        return SearchLocators.STOCKS_TAB
 
     @property
     def posts_tab(self):
         return self.get_clickable_element(
             'Posts search tab',
-            SearchLocators.BLOGS_TAB
+            self.posts_tab_locator
         )
+    
+    @property
+    def posts_tab_locator(self):
+        return SearchLocators.BLOGS_TAB
     
     @property
     def people_tab(self):
         return self.get_clickable_element(
             'People search tab',
-            SearchLocators.PEOPLE_TAB
+            self.people_tab_locator
         )
+
+    @property
+    def people_tab_locator(self):
+        return SearchLocators.PEOPLE_TAB
+    
+    @property
+    def shop_tab(self):
+        return self.get_clickable_element(
+            'Shop search tab',
+            self.shop_tab_locator
+        )
+
+    @property
+    def shop_tab_locator(self):
+        return SearchLocators.SHOP_TAB
 
     @property
     def post_results(self):
@@ -38,6 +71,20 @@ class SearchPage(BasePage):
         return self.get_elements(
             'People Results',
             SearchLocators.PEOPLE
+        )
+
+    @property
+    def stocks_results(self):
+        return self.get_elements(
+            'Stocks Results',
+            SearchLocators.STOCKS
+        )
+    
+    @property
+    def shop_results(self):
+        return self.get_elements(
+            'People Results',
+            SearchLocators.SHOP
         )
     
     @property
@@ -78,3 +125,33 @@ class SearchPage(BasePage):
         for exp in expected:
             for result in results:
                 self.compare_texts(result.text.lower(), exp.lower())
+    
+    def check_shop_results(self, request):
+        results = self.shop_results
+    
+        for result in results:
+            self.compare_texts(result.text.lower(), request.lower())
+
+    def check_tabs(self):
+        self.check_visibility(
+            'Stocks tab', self.stocks_tab_locator
+        )
+        self.check_visibility(
+            'People tab', self.people_tab_locator
+        )
+        self.check_visibility(
+            'Posts tab', self.posts_tab_locator
+        )
+        self.check_visibility(
+            'Shop tab', self.shop_tab_locator
+        )
+    
+    def switch_tab(self, tab):
+        if tab == 'stocks':
+            self.stocks_tab.click()
+        elif tab == 'people':
+            self.people_tab.click()
+        elif tab == 'posts':
+            self.posts_tab.click()
+        elif tab == 'shop':
+            self.shop_tab.click()
