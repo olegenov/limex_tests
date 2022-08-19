@@ -12,6 +12,7 @@ class NavLocators:
     SEARCH_INPUT_MOBILE = (By.XPATH, '//div[contains(@class, "Mobile")]//input')
     SEARCH_BUTTON = (By.CSS_SELECTOR, 'button[kind="ghost-secondary"]')
     MAGNIFIER_ICON = (By.CSS_SELECTOR, 'header form svg')
+    MAGNIFIER_ICON_MOBILE = (By.CSS_SELECTOR, '//div[contains(@class, "SearchButton")]')
     SEARCH_FIELD_PLACEHOLDER = (By.CSS_SELECTOR, 'input[placeholder="Бумаги, посты, люди, продукты..."]')
 
     MENU = (By.XPATH, '//span[contains(@class, "MobileMenu")]')

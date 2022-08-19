@@ -81,8 +81,12 @@ class NavPage(BasePage):
     def search_button(self):
         return self.get_clickable_element(
             'Search button',
-            NavLocators.SEARCH_BUTTON
+            self.search_button_locator
         )
+    
+    @property
+    def search_button_locator(self):
+        return NavLocators.SEARCH_BUTTON
     
     @property
     def magnifier_icon(self):
@@ -103,9 +107,13 @@ class NavPage(BasePage):
     def menu(self):
         return self.get_clickable_element(
             'Menu',
-            NavLocators.MENU
+            self.menu_locator
         )
     
+    @property
+    def menu_locator(self):
+        return NavLocators.MENU
+
     def check_search_field_active(self):
         assert self.search_input == self.driver.switch_to.active_element,\
                'Search field is not active'

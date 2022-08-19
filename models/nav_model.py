@@ -103,13 +103,18 @@ class Nav(BaseModel):
         self.page.menu.click()
     
     def check_components(self):
-        self.page.check_visibility('Search field', self.page.search_input_locator)
-        self.page.check_visibility('Magnifier icon', self.page.magnifier_icon_locator)
-        self.page.check_visibility('Search field placeholder', self.page.search_field_placeholder_locator)
+        if self.page.is_mobile():
+            self.page.check_visibility('Search button', self.page.search_button_locator)
+            self.page.check_visibility('Menu', self.page.menu_locator)
+        else:
+            self.page.check_visibility('Search field', self.page.search_input_locator)
+            self.page.check_visibility('Magnifier icon', self.page.magnifier_icon_locator)
+            self.page.check_visibility('Search field placeholder', self.page.search_field_placeholder_locator)
     
     def check_clickable_search(self):
-        self.page.magnifier_icon.click()
-        self.page.check_search_field_active()
+        if not self.page.is_mobile():
+            self.page.magnifier_icon.click()
+            self.page.check_search_field_active()
 
         self.page.search_input.click()
         self.page.check_search_field_active()

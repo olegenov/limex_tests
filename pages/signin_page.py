@@ -19,7 +19,7 @@ class SigninPage(BasePage):
     def close_button(self):
         return self.get_element(
             'Close button',
-            SigninLocators.CLOSE_BUTTON
+            self.cross_locator
         )
     
     @property
@@ -58,7 +58,7 @@ class SigninPage(BasePage):
     def next_button(self):
         return self.get_clickable_element(
             'Next button',
-            SigninLocators.NEXT_BUTTON
+            self.next_button_locator
         )
 
     @property
@@ -96,7 +96,7 @@ class SigninPage(BasePage):
     def confirmation_quit_button(self):
         return self.get_element(
             'Pin close button',
-            SigninLocators.CONFIRM_QUIT_BUTTON
+            self.confirmation_quit_button_locator
         )
     
     @property
@@ -108,7 +108,7 @@ class SigninPage(BasePage):
     def confirmation_back_button(self):
         return self.get_element(
             'Confirm back button',
-            SigninLocators.CONFIRM_BACK_BUTTON
+            self.confirmation_back_button_locator
         )
     
     @property

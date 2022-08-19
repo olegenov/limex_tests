@@ -7,17 +7,17 @@ class TestSearch:
     @allure.feature('Поиск поста')
     @allure.severity(allure.severity_level.NORMAL)
     @pytest.mark.regress
-    @pytest.mark.skip
     def test_posts_search(self, app):
         with allure.step('Step 1. Пользователь русский. В поле поиска ввести слова из заголовка поста'):
+            app.change_locale('ru')
             if app.is_mobile():
                 app.models.nav.click_search_button()
-
-            app.change_locale('ru')
             app.models.nav.input_post_search_request('Сбербанк обозначил')
 
         with allure.step('Step 2. Пользователь английский. В поле поиска ввести слова из заголовка поста'):
             app.change_locale('en')
+            if app.is_mobile():
+                app.models.nav.click_search_button()
             app.models.nav.input_post_search_request('Gold')
         
         with allure.step('Step 3. Кликнуть на пост'):
@@ -30,7 +30,6 @@ class TestSearch:
     @allure.feature('Поиск людей')
     @allure.severity(allure.severity_level.NORMAL)
     @pytest.mark.regress
-    @pytest.mark.skip
     def test_people_search(self, app):
         with allure.step('Step 1. В поле поиска ввести Имя пользователя'):
             if app.is_mobile():
@@ -99,12 +98,15 @@ class TestSearch:
             app.models.nav.check_components()
         
         with allure.step('Step 1. Кликнуть в любое место поле Поиска'):
+            if app.is_mobile():
+                app.models.nav.click_search_button()
+
             app.models.nav.check_clickable_search()
         
         with allure.step('Step 3. Ввести название тикера'):
             app.models.nav.input_search_request('Google')
 
-        with allure.step('Step 4. Ввести название тикера'):
+        with allure.step('Step 4. Кликнуть на название любого тикера'):
             app.models.search.click_ticker()
         '''
         with allure.step('Step 5. Гостем кликнуть по звездочке справа от любого тикера'):
@@ -124,6 +126,9 @@ class TestSearch:
             app.models.search.hot_click_ticker()
         '''
         with allure.step('Step 10. Переключиться на "Люди"'):
+            if app.is_mobile():
+                app.models.nav.click_search_button()
+
             app.models.nav.input_people_search_request('Дмитрий')
         
         with allure.step('Step 11. Переключиться на "Посты"'):
