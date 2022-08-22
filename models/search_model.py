@@ -11,7 +11,7 @@ class Search(BaseModel):
         post.click()
     
     def click_name(self, request):
-        name = self.page.people_results[1]
+        name = self.page.people_results[0]
         name.click()
         self.page.should_be_right_page('https://ng.tst.whotrades.net/profile/')
 
