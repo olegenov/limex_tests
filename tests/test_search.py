@@ -3,38 +3,26 @@ import allure
 
 
 class TestSearch:
-    @allure.testcase('Limex. Поиск поста')
+    @allure.testcase('Поиск поста (8.0)')
     @allure.feature('Поиск поста')
     @allure.severity(allure.severity_level.NORMAL)
     @pytest.mark.regress
     def test_posts_search(self, app):
-        with allure.step('Step 1. Пользователь русский. В поле поиска ввести слова из заголовка поста'):
-            app.change_locale('ru')
-            if app.is_mobile():
-                app.models.nav.click_search_button()
+        with allure.step('Step 1. Гостем в поле поиска ввести слова из заголовка поста'):
             app.models.nav.input_post_search_request('Сбербанк обозначил')
 
-        with allure.step('Step 2. Пользователь английский. В поле поиска ввести слова из заголовка поста'):
-            app.change_locale('en')
-            if app.is_mobile():
-                app.models.nav.click_search_button()
-            app.models.nav.input_post_search_request('Gold')
-        
-        with allure.step('Step 3. Кликнуть на пост'):
+        with allure.step('Step 2. Кликнуть на первый пост в выдаче'):
             app.models.search.click_post()
         
-        with allure.step('Asserts. Пост соответствует поиску'):
-            app.models.main.check_post_match('Gold')
+        with allure.step('Asserts. Проверить, что открытый пост содержит текст из поискового запроса'):
+            app.models.main.check_post_match('Сбербанк обозначил')
 
-    @allure.testcase('Limex. Поиск людей')
+    @allure.testcase('Поиск людей')
     @allure.feature('Поиск людей')
     @allure.severity(allure.severity_level.NORMAL)
     @pytest.mark.regress
     def test_people_search(self, app):
         with allure.step('Step 1. В поле поиска ввести Имя пользователя'):
-            if app.is_mobile():
-                app.models.nav.click_search_button()
-            
             app.models.nav.input_stocks_search_request('Дмитрий')
         
         with allure.step('Step 2. В поле поиска ввести Имя пользователя'):
@@ -44,44 +32,25 @@ class TestSearch:
             app.models.search.click_name('Дмитрий')
         
         with allure.step('Step 4. Ввести Фамилию пользователя'):
-            if app.is_mobile():
-                app.models.nav.click_search_button()
-
             app.models.nav.input_people_search_request('Кузьменко')
         
         with allure.step('Step 5. Ввести Имя и Фамилию пользователя'):
             app.models.nav.input_people_search_request('Tatyana Kalinnikova')
             app.models.nav.input_people_search_request('Kalinnikova Tatyana')
-
-            if app.is_mobile():
-                app.models.search.close_search()
+            app.models.search.close_search()
         
         with allure.step('Step 6. Пользователем ввести собственное имя профиля'):
             app.login()
-
-            if app.is_mobile():
-                app.models.nav.click_search_button()
-
             app.models.nav.input_self_search_request('aboba')
-
-            if app.is_mobile():
-                app.models.search.close_search()
-
+            app.models.search.close_search()
             app.logout()
 
         with allure.step('Step 7. Гостем кликнуть на иконку подписки на пользователя'):
-            if app.is_mobile():
-                app.models.nav.click_search_button()
-
             app.models.nav.input_people_search_request('Tatyana Kalinnikova')
             app.models.search.guest_follow()
 
         with allure.step('Step 8. Пользователем кликнуть на иконку подписки на пользователя'):
             app.login()
-
-            if app.is_mobile():
-                app.models.nav.click_search_button()
-
             app.models.nav.input_people_search_request('Tatyana Kalinnikova')
             app.models.search.user_follow()
         
@@ -89,18 +58,15 @@ class TestSearch:
             app.models.profile.check_following()
             app.logout()
         
-    @allure.testcase('Limex. Поиск. Внешний вид')
+    @allure.testcase('Поиск. Внешний вид')
     @allure.feature('Поиск. Внешний вид')
     @allure.severity(allure.severity_level.NORMAL)
     @pytest.mark.regress
-    def test_people_search(self, app):
+    def test_search_view(self, app):
         with allure.step('Step 1. Гостем/Пользователем открыть страницу ленты'):
             app.models.nav.check_components()
         
         with allure.step('Step 1. Кликнуть в любое место поле Поиска'):
-            if app.is_mobile():
-                app.models.nav.click_search_button()
-
             app.models.nav.check_clickable_search()
         
         with allure.step('Step 3. Ввести название тикера'):
@@ -126,9 +92,6 @@ class TestSearch:
             app.models.search.hot_click_ticker()
         '''
         with allure.step('Step 10. Переключиться на "Люди"'):
-            if app.is_mobile():
-                app.models.nav.click_search_button()
-
             app.models.nav.input_people_search_request('Дмитрий')
         
         with allure.step('Step 11. Переключиться на "Посты"'):

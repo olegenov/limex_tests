@@ -40,7 +40,8 @@ class Search(BaseModel):
         self.page.people_results[0].click()
     
     def close_search(self):
-        self.page.close_button.click()
+        if self.page.is_mobile():
+            self.page.close_search()
     
     def click_ticker(self):
         self.page.stocks_results[0].click()

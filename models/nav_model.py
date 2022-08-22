@@ -3,7 +3,7 @@ from selenium.webdriver.common.keys import Keys
 
 from ..utils import wait
 
-from ..pages.nav_page import NavPage
+from .search_model import Search
 
 from .base_model import BaseModel
 from ..pages.signup_page import SignupPage
@@ -58,6 +58,9 @@ class Nav(BaseModel):
     
     @wait(1)
     def input_post_search_request(self, request):
+        if self.page.is_mobile():
+            self.page.open_search()
+
         self.clear_search_input()
         self.page.search_input.send_keys(request)
         page = SearchPage(self.driver, self.driver.current_url)
@@ -65,6 +68,9 @@ class Nav(BaseModel):
     
     @wait(1)
     def input_stocks_search_request(self, request):
+        if self.page.is_mobile():
+            self.page.open_search()
+
         self.clear_search_input()
         self.page.search_input.send_keys(request)
         page = SearchPage(self.driver, self.driver.current_url)
@@ -72,6 +78,9 @@ class Nav(BaseModel):
     
     @wait(1)
     def input_people_search_request(self, request):
+        if self.page.is_mobile():
+            self.page.open_search()
+
         self.clear_search_input()
         self.page.search_input.send_keys(request)
         page = SearchPage(self.driver, self.driver.current_url)
@@ -81,6 +90,9 @@ class Nav(BaseModel):
     
     @wait(1)
     def input_shop_search_request(self, request):
+        if self.page.is_mobile():
+            self.page.open_search()
+
         self.clear_search_input()
         self.page.search_input.send_keys(request)
         page = SearchPage(self.driver, self.driver.current_url)
@@ -93,9 +105,14 @@ class Nav(BaseModel):
     
     @wait(1)
     def input_self_search_request(self, request):
+        page = SearchPage(self.driver, self.driver.current_url)
+
+        if self.page.is_mobile():
+            self.page.open_search()
+
         self.clear_search_input()
         self.page.search_input.send_keys(request)
-        page = SearchPage(self.driver, self.driver.current_url)
+
         page.people_tab.click()
         page.check_invisibility('Self subscription button', page.self_subscription_locator)
     
@@ -112,6 +129,9 @@ class Nav(BaseModel):
             self.page.check_visibility('Search field placeholder', self.page.search_field_placeholder_locator)
     
     def check_clickable_search(self):
+        if self.page.is_mobile():
+            self.page.open_search()
+
         if not self.page.is_mobile():
             self.page.magnifier_icon.click()
             self.page.check_search_field_active()

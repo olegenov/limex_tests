@@ -135,3 +135,7 @@ class NavPage(BasePage):
         action.move_to_element_with_offset(element, width//2, 0)
         action.click()
         action.perform()
+
+    def open_search(self):
+        if not self.is_visibility_of_element(self.search_input_locator, 1):
+            self.search_button.click()

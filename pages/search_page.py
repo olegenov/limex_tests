@@ -155,3 +155,9 @@ class SearchPage(BasePage):
             self.posts_tab.click()
         elif tab == 'shop':
             self.shop_tab.click()
+
+    def close_search(self):
+        page = NavPage(self.driver, self.driver.current_url)
+
+        if self.is_visibility_of_element(page.search_input_locator, 1):
+            self.close_button.click()
