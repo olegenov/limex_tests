@@ -56,33 +56,28 @@ class Nav(BaseModel):
         page = LogoutPage(self.driver, self.driver.current_url)
         page.confirm_logout.click()
     
-    @wait(1)
-    def input_post_search_request(self, request):
+    def type_search_request(self, request):
         if self.page.is_mobile():
             self.page.open_search()
 
         self.clear_search_input()
         self.page.search_input.send_keys(request)
+    
+    @wait(1)
+    def input_post_search_request(self, request):
+        self.type_search_request(request)
         page = SearchPage(self.driver, self.driver.current_url)
         page.posts_tab.click()
     
     @wait(1)
     def input_stocks_search_request(self, request):
-        if self.page.is_mobile():
-            self.page.open_search()
-
-        self.clear_search_input()
-        self.page.search_input.send_keys(request)
+        self.type_search_request(request)
         page = SearchPage(self.driver, self.driver.current_url)
         page.check_no_results(request)
     
     @wait(1)
     def input_people_search_request(self, request):
-        if self.page.is_mobile():
-            self.page.open_search()
-
-        self.clear_search_input()
-        self.page.search_input.send_keys(request)
+        self.type_search_request(request)
         page = SearchPage(self.driver, self.driver.current_url)
         page.people_tab.click()
         page.check_people_results(request)
@@ -90,11 +85,7 @@ class Nav(BaseModel):
     
     @wait(1)
     def input_shop_search_request(self, request):
-        if self.page.is_mobile():
-            self.page.open_search()
-
-        self.clear_search_input()
-        self.page.search_input.send_keys(request)
+        self.type_search_request(request)
         page = SearchPage(self.driver, self.driver.current_url)
         page.shop_tab.click()
         page.check_shop_results(request)
@@ -105,14 +96,8 @@ class Nav(BaseModel):
     
     @wait(1)
     def input_self_search_request(self, request):
+        self.type_search_request(request)
         page = SearchPage(self.driver, self.driver.current_url)
-
-        if self.page.is_mobile():
-            self.page.open_search()
-
-        self.clear_search_input()
-        self.page.search_input.send_keys(request)
-
         page.people_tab.click()
         page.check_invisibility('Self subscription button', page.self_subscription_locator)
     
