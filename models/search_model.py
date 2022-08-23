@@ -10,29 +10,27 @@ class Search(BaseModel):
         post = self.page.post_results[0]
         post.click()
     
-    def click_name(self, request):
+    def click_name(self, app, request):
         name = self.page.people_results[0]
         name.click()
         self.page.should_be_right_page('https://ng.tst.whotrades.net/profile/')
+        app.models.profile.page.compare_texts(app.models.profile.page.name.text, request)
 
-        page = ProfilePage(self.driver, self.driver.current_url)
-        page.compare_texts(page.name.text, request)
+        if app.models.nav.page.is_mobile():
+            app.models.nav.page.menu.click()
 
-        page = NavPage(self.driver, self.driver.current_url)
-
-        if page.is_mobile():
-            page.menu.click()
-
-        page.feed_link.click()
+        app.models.nav.page.feed_link.click()
     
-    def guest_follow(self):
+    def guest_follow(self, app):
         self.page.follow_button[0].click()
-        page = SigninPage(self.driver, self.driver.current_url)
-        page.check_visibility('Signin popup', page.popup_locator)
+        app.models.signin.page.check_visibility(
+            'Signin popup',
+            app.models.signin.page.popup_locator
+        )
         self.page.check_visibility('Search', self.page.search_result_locator)
-        page.email_button.click()
+        app.models.signin.page.email_button.click()
         self.page.check_invisibility('Search', self.page.search_result_locator)
-        page.email_close_button.click()
+        app.models.signin.page.email_close_button.click()
 
     def user_follow(self):
         self.page.follow_button[0].click()
@@ -43,13 +41,11 @@ class Search(BaseModel):
         if self.page.is_mobile():
             self.page.close_search()
     
-    def click_ticker(self):
+    def click_ticker(self, app):
         self.page.stocks_results[0].click()
         self.page.should_be_right_page('https://ng.tst.whotrades.net/$')
 
-        page = NavPage(self.driver, self.driver.current_url)
+        if app.models.nav.page.is_mobile():
+            app.models.nav.page.menu.click()
 
-        if page.is_mobile():
-            page.menu.click()
-
-        page.feed_link.click()
+        app.models.nav.page.feed_link.click()

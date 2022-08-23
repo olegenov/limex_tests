@@ -9,7 +9,7 @@ class TestSearch:
     @pytest.mark.regress
     def test_posts_search(self, app):
         with allure.step('Step 1. Гостем в поле поиска ввести слова из заголовка поста'):
-            app.models.nav.input_post_search_request('Сбербанк обозначил')
+            app.models.nav.input_post_search_request(app, 'Сбербанк обозначил')
 
         with allure.step('Step 2. Кликнуть на первый пост в выдаче'):
             app.models.search.click_post()
@@ -27,28 +27,28 @@ class TestSearch:
 
         with allure.step('Step 1. Пользователем открыть поиск на вкладке "Люди" и ввести существующее имя пользователя'):
             name = 'Дмитрий'
-            app.models.nav.input_people_search_request(name)
+            app.models.nav.input_people_search_request(app, name)
         
         with allure.step('Step 2. Кликнуть на первое имя пользователя из списка'):
-            app.models.search.click_name(name)
+            app.models.search.click_name(app, name)
         
         with allure.step('Step 3. Ввести Фамилию пользователя'):
             surname = 'Иванов'
-            app.models.nav.input_people_search_request(surname)
+            app.models.nav.input_people_search_request(app, surname)
         
         with allure.step('Step 4. Ввести Имя и Фамилию пользователя'):
-            app.models.nav.input_people_search_request(f'{name} {surname}')
+            app.models.nav.input_people_search_request(app, f'{name} {surname}')
         
         with allure.step('Step 5. Ввести Фамилию и имя пользователя в обратном порядке'):
-            app.models.nav.input_people_search_request(f'{surname} {name}')
+            app.models.nav.input_people_search_request(app, f'{surname} {name}')
         
         with allure.step('Step 6. Пользователем ввести собственное имя профиля'):
             self_username = 'aboba'
-            app.models.nav.input_self_search_request(self_username)
+            app.models.nav.input_self_search_request(app, self_username)
 
         with allure.step('Step 7. Пользователем найти пользователя и кликнуть на иконку подписки'):
             name, surname = 'Tatyana', 'Kalinnikova'
-            app.models.nav.input_people_search_request(f'{name} {surname}')
+            app.models.nav.input_people_search_request(app, f'{name} {surname}')
             app.models.search.user_follow()
         
         with allure.step('Asserts. Пользователь подписан на пользователя'):
@@ -69,19 +69,19 @@ class TestSearch:
             app.models.nav.check_clickable_search()
         
         with allure.step('Step 3. Ввести название тикера'):
-            app.models.nav.input_search_request('Google')
+            app.models.nav.input_search_request(app, 'Google')
 
         with allure.step('Step 4. Кликнуть на название любого тикера'):
-            app.models.search.click_ticker()
+            app.models.search.click_ticker(app)
 
         with allure.step('Step 5. Переключиться на "Люди"'):
-            app.models.nav.input_people_search_request('Дмитрий')
+            app.models.nav.input_people_search_request(app, 'Дмитрий')
         
         with allure.step('Step 6. Переключиться на "Посты"'):
-            app.models.nav.input_post_search_request('Сбербанк обозначил')
+            app.models.nav.input_post_search_request(app, 'Сбербанк обозначил')
         
         with allure.step('Step 7. Переключиться на "Магазин"'):
-            app.models.nav.input_shop_search_request('Research')
+            app.models.nav.input_shop_search_request(app, 'Research')
         
         with allure.step('Asserts. Проверить все табы на отсут. результат'):
-            app.models.nav.find_without_results('Оцлоуимжцоуижсло')
+            app.models.nav.find_without_results(app, 'Оцлоуимжцоуижсло')

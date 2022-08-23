@@ -64,42 +64,43 @@ class Nav(BaseModel):
         self.page.search_input.send_keys(request)
     
     @wait(1)
-    def input_post_search_request(self, request):
+    def input_post_search_request(self, app, request):
         self.type_search_request(request)
-        page = SearchPage(self.driver, self.driver.current_url)
-        page.posts_tab.click()
+        app.models.search.page.posts_tab.click()
     
     @wait(1)
-    def input_stocks_search_request(self, request):
+    def input_stocks_search_request(self, app, request):
         self.type_search_request(request)
-        page = SearchPage(self.driver, self.driver.current_url)
-        page.check_no_results(request)
+        app.models.search.page.check_no_results(request)
     
     @wait(1)
-    def input_people_search_request(self, request):
+    def input_people_search_request(self, app, request):
         self.type_search_request(request)
-        page = SearchPage(self.driver, self.driver.current_url)
-        page.people_tab.click()
-        page.check_people_results(request)
-        page.check_visibility('Verified', page.verified_locator)
+        app.models.search.page.people_tab.click()
+        app.models.search.page.check_people_results(request)
+        app.models.search.page.check_visibility(
+            'Verified',
+            app.models.search.page.verified_locator
+        )
     
     @wait(1)
-    def input_shop_search_request(self, request):
+    def input_shop_search_request(self, app, request):
         self.type_search_request(request)
-        page = SearchPage(self.driver, self.driver.current_url)
-        page.shop_tab.click()
-        page.check_shop_results(request)
+        app.models.search.page.shop_tab.click()
+        app.models.search.page.check_shop_results(request)
     
     @wait(1)
     def click_search_button(self):
         self.page.search_button.click()
     
     @wait(1)
-    def input_self_search_request(self, request):
+    def input_self_search_request(self, app, request):
         self.type_search_request(request)
-        page = SearchPage(self.driver, self.driver.current_url)
-        page.people_tab.click()
-        page.check_invisibility('Self subscription button', page.self_subscription_locator)
+        app.models.search.page.people_tab.click()
+        app.models.search.page.check_invisibility(
+            'Self subscription button', 
+            app.models.search.page.self_subscription_locator
+        )
     
     def close_menu(self):
         self.page.menu.click()
@@ -130,23 +131,20 @@ class Nav(BaseModel):
         self.page.click_left_corner_search_input()
         self.page.check_search_field_active()
 
-    def input_search_request(self, request):
+    def input_search_request(self, app, request):
         self.clear_search_input()
         self.page.search_input.send_keys(request)
 
-        page = SearchPage(self.driver, self.driver.current_url)
-        page.check_visibility(
+        app.models.search.page.check_visibility(
             'Search popup',
-            page.search_result_locator
+            app.models.search.page.search_result_locator
         )
-        page.check_tabs()
+        app.models.search.page.check_tabs()
 
-    def find_without_results(self, request):
+    def find_without_results(self, app, request):
         self.clear_search_input()
         self.page.search_input.send_keys(request)
-
-        page = SearchPage(self.driver, self.driver.current_url)
 
         for tab in ['stocks', 'people', 'posts', 'shop']:
-            page.switch_tab(tab)
-            page.check_no_results(request)
+            app.models.search.page.switch_tab(tab)
+            app.models.search.page.check_no_results(request)
