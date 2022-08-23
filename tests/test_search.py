@@ -22,33 +22,39 @@ class TestSearch:
     @allure.severity(allure.severity_level.NORMAL)
     @pytest.mark.regress
     def test_people_search(self, app):
-        with allure.step('Step 1. Пользователем открыть поиск на вкладке "Люди" и ввести существующее имя пользователя'):
+        with allure.step('Setup. Авторизация'):
             app.login()
-            app.models.nav.input_people_search_request('Дмитрий')
+
+        with allure.step('Step 1. Пользователем открыть поиск на вкладке "Люди" и ввести существующее имя пользователя'):
+            name = 'Дмитрий'
+            app.models.nav.input_people_search_request(name)
         
         with allure.step('Step 2. Кликнуть на первое имя пользователя из списка'):
-            app.models.search.click_name('Дмитрий')
+            app.models.search.click_name(name)
         
         with allure.step('Step 3. Ввести Фамилию пользователя'):
-            app.models.nav.input_people_search_request('Кузьменко')
+            surname = 'Иванов'
+            app.models.nav.input_people_search_request(surname)
         
         with allure.step('Step 4. Ввести Имя и Фамилию пользователя'):
-            app.models.nav.input_people_search_request('Dmitry Kashin')
+            app.models.nav.input_people_search_request(f'{name} {surname}')
         
         with allure.step('Step 5. Ввести Фамилию и имя пользователя в обратном порядке'):
-            app.models.nav.input_people_search_request('Kashin Dmitry')
-            app.models.search.close_search()
+            app.models.nav.input_people_search_request(f'{surname} {name}')
         
         with allure.step('Step 6. Пользователем ввести собственное имя профиля'):
-            app.models.nav.input_self_search_request('aboba')
-            app.models.search.close_search()
+            self_username = 'aboba'
+            app.models.nav.input_self_search_request(self_username)
 
-        with allure.step('Step 7. Пользователем кликнуть на иконку подписки на пользователя'):
-            app.models.nav.input_people_search_request('Tatyana Kalinnikova')
+        with allure.step('Step 7. Пользователем найти пользователя и кликнуть на иконку подписки'):
+            name, surname = 'Tatyana', 'Kalinnikova'
+            app.models.nav.input_people_search_request(f'{name} {surname}')
             app.models.search.user_follow()
         
         with allure.step('Asserts. Пользователь подписан на пользователя'):
             app.models.profile.check_following()
+        
+        with allure.step('Teardown. Выход из аккаунта'):
             app.logout()
 
     @allure.testcase('Поиск. Внешний вид')
