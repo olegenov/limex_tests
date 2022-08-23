@@ -67,30 +67,14 @@ class TestSearch:
 
         with allure.step('Step 4. Кликнуть на название любого тикера'):
             app.models.search.click_ticker()
-        '''
-        with allure.step('Step 5. Гостем кликнуть по звездочке справа от любого тикера'):
-            app.models.search.guest_click_ticker_star()
-        
-        with allure.step('Step 6. Пользователем кликнуть по иконке звездочке справа от любого тикера'):
-            app.login()
-            app.models.search.user_click_ticker_star()
-        
-        with allure.step('Step 7. Проверить отображение тикера в вотчлисте'):
-            app.models.main.check_watchlist()
-        
-        with allure.step('Step 8. В поиск вновь ввести тот же тикер'):
-            app.models.search.input_starred_search_request('Google')
 
-        with allure.step('Step 9. Кликнуть на название любого тикера иным образом'):
-            app.models.search.hot_click_ticker()
-        '''
-        with allure.step('Step 10. Переключиться на "Люди"'):
+        with allure.step('Step 5. Переключиться на "Люди"'):
             app.models.nav.input_people_search_request('Дмитрий')
         
-        with allure.step('Step 11. Переключиться на "Посты"'):
+        with allure.step('Step 6. Переключиться на "Посты"'):
             app.models.nav.input_post_search_request('Сбербанк обозначил')
         
-        with allure.step('Step 12. Переключиться на "Магазин"'):
+        with allure.step('Step 7. Переключиться на "Магазин"'):
             app.models.nav.input_shop_search_request('Research')
         
         with allure.step('Asserts. Проверить все табы на отсут. результат'):
