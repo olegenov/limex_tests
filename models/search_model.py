@@ -1,3 +1,4 @@
+from re import S
 from .base_model import BaseModel
 
 from ..pages.signin_page import SigninPage

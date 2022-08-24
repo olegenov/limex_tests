@@ -1,3 +1,4 @@
+from xml.sax.handler import property_declaration_handler
 from .base_page import BasePage
 
 from ..locators.profile_locators import ProfileLocators
@@ -24,4 +25,25 @@ class ProfilePage(BasePage):
         return self.get_element(
             'Name',
             ProfileLocators.NAME
+        )
+
+    @property
+    def comment_button(self):
+        return self.get_element(
+            'Comment button',
+            ProfileLocators.COMMENT_BUTTON
+        )
+    
+    @property
+    def comment_textarea(self):
+        return self.get_element(
+            'Comment textarea',
+            ProfileLocators.COMMENT_TEXTAREA
+        )
+
+    @property
+    def leave_comment_button(self):
+        return self.get_element(
+            'Leave comment button',
+            ProfileLocators.LEAVE_COMMENT_BUTTON
         )

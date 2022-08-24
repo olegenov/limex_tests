@@ -24,10 +24,10 @@ class Application(object):
     def is_mobile(self):
         return 'iPhone' in self.driver.execute_script('return navigator.userAgent',)
     
-    def login(self):
+    def login(self, login):
         self.models.nav.click_login_button()
         self.models.signin.click_email_button()
-        email = 'aboba@tst.whotrades.org'
+        email = login + '@tst.whotrades.org'
         self.models.signin.input_new_email(email)
         self.models.signin.complete_signin(email)
         self.models.signin.click_sign_in()

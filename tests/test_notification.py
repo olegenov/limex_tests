@@ -3,14 +3,27 @@ import allure
 
 
 class TestNotification:
-    @allure.testcase('Уведомление о лайке публикации (2.0)')
-    @allure.feature('Уведомление о лайке публикации')
+    @allure.testcase('Уведомление о комментарии в своей публикации (2.0)')
+    @allure.feature('Уведомление о комментарии в своей публикации')
     @allure.severity(allure.severity_level.NORMAL)
     @pytest.mark.regress
-    def test_post_like_notification(self, app):
-        with allure.step('Step 1. Пользователем 1 опубликовать запись с текстом минимум в 2 строки'):
+    def test_self_post_comment_notification(self, app):
+        user1 = 'aboba'
+        user2 = 'abober'
+
+        with allure.step(f'Step 1. Пользователем {user1} опубликовать пост'):
+            app.login(user1)
+            app.models.main.publish_post()
+            app.logout()
+
+        with allure.step(f'Step 2. Пользователем {user2} оставить комментарий под постом пользователя 1'):
+            app.login(user2)
+            app.models.profile.leave_comment(app, user1)
+            app.logout()
+
+        with allure.step(f'Step 3. Пользователем {user1} открыть центр уведомлений'):
             pass
-        with allure.step('Step 2. Пользователем 2 лайкнуть запись от пользователя 1'):
+        with allure.step('Step 4. Кликнуть на уведомление'):
             pass
-        with allure.step('Asserts. Проверить, что в уведомлении текст публикации максимально может быть отображен в двух строках'):
+        with allure.step('Asserts. Открыт нужный пост в профиле'):
             pass

@@ -23,9 +23,9 @@ class TestSearch:
     @pytest.mark.regress
     def test_people_search(self, app):
         with allure.step('Setup. Авторизация'):
-            app.login()
+            app.login('aboba')
 
-        with allure.step('Step 1. Пользователем открыть поиск на вкладке "Люди" и ввести существующее имя пользователя'):
+        with allure.step('Step 1. Польз. открыть поиск на вкладке "Люди" и ввести существующее имя пользователя'):
             name = 'Дмитрий'
             app.models.nav.input_people_search_request(app, name)
         
